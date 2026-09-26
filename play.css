@@ -1,0 +1,73 @@
+/* A team's phone: one job, four giant buttons. The team color floods the header so
+   everyone at the table knows whose phone it is. */
+
+:root {
+  --ink: #1d1b26;
+  --paper: #f4ecdc;
+  --card: #fffaf0;
+  --red: #c8372d;
+  --green: #1e8a4c;
+  --gold: #e0a100;
+  --c: #888;
+  --display: "Bungee", "Arial Black", sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, sans-serif;
+}
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body { margin: 0; min-height: 100%; }
+body { background: var(--paper); color: var(--ink); font-family: var(--body); font-size: 18px; }
+
+.bar {
+  display: flex; justify-content: space-between; align-items: center; gap: 12px;
+  padding: 12px 16px; padding-top: max(12px, env(safe-area-inset-top));
+  background: var(--c); color: #fff; transition: background .4s;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, .35);
+}
+.brand { font-family: var(--display); font-size: 16px; }
+#me { text-align: right; font-size: 15px; line-height: 1.2; }
+#me span { display: block; opacity: .95; font-size: 13px; }
+
+main { padding: 16px; max-width: 520px; margin: 0 auto; }
+.wait { text-align: center; color: #5d5866; margin-top: 40px; }
+
+.card { background: var(--card); border: 2px solid var(--ink); border-radius: 16px; box-shadow: 0 5px 0 var(--ink); padding: 20px; margin-top: 8px; }
+.card h1 { font-family: var(--display); font-size: 26px; margin: 0 0 10px; }
+.center { text-align: center; }
+.small { font-size: 14px; color: #5d5866; }
+.err { color: var(--red); font-weight: 700; }
+.huge { font-family: var(--display); font-size: 64px; margin: 6px 0; }
+.letter { font-family: var(--display); font-size: 40px; vertical-align: middle; }
+
+.join label { display: block; font-weight: 700; margin-bottom: 14px; }
+.join input {
+  display: block; width: 100%; margin-top: 6px; padding: 12px 14px; font: 700 22px var(--body);
+  border: 2px solid var(--ink); border-radius: 10px; background: #fff; color: var(--ink);
+}
+.join #code { font-family: var(--display); letter-spacing: .15em; text-transform: uppercase; font-size: 28px; }
+.go {
+  width: 100%; padding: 14px; font: 700 20px var(--body); color: var(--ink); background: var(--gold);
+  border: 2px solid var(--ink); border-radius: 12px; box-shadow: 0 4px 0 var(--ink); cursor: pointer;
+}
+
+.q-top { display: flex; justify-content: space-between; align-items: center; font-weight: 700; margin: 4px 2px 12px; }
+.clock { font-family: var(--display); font-size: 28px; }
+.clock.hurry { color: var(--red); }
+.out { background: #f6d5cf; border-radius: 10px; padding: 10px 12px; font-weight: 700; margin: 0 0 12px; }
+.answers { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.ans {
+  aspect-ratio: 1 / .8; font-family: var(--display); font-size: 56px; color: var(--ink);
+  background: var(--card); border: 3px solid var(--ink); border-radius: 18px; box-shadow: 0 6px 0 var(--ink);
+  cursor: pointer; transition: transform .08s;
+}
+.ans:active { transform: translateY(4px); box-shadow: 0 2px 0 var(--ink); }
+.ans.picked { background: var(--c); color: #fff; text-shadow: 0 2px 3px rgba(0, 0, 0, .35); }
+.dd {
+  width: 100%; margin-top: 16px; padding: 12px; font: 700 17px var(--body); border-radius: 12px; cursor: pointer;
+  background: transparent; color: var(--ink); border: 2px dashed var(--ink);
+}
+.dd.on { background: var(--ink); color: var(--gold); border-style: solid; }
+.status { text-align: center; margin-top: 14px; }
+
+.result.good { border-color: var(--green); box-shadow: 0 5px 0 var(--green); }
+.result.good h1, .result.good .huge { color: var(--green); }
+.result.bad { border-color: var(--red); box-shadow: 0 5px 0 var(--red); }
+.result.bad h1, .result.bad .huge { color: var(--red); }

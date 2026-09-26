@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>The Gauntlet: Question Bank</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bungee&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono&display=swap">
+  <link rel="stylesheet" href="host.css">
+  <style>
+    body { overflow: auto; display: block; }
+    .bank { max-width: 70rem; margin: 0 auto; padding: 1.2rem 1.4rem 4rem; }
+    .bank-head { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; margin-bottom: 1rem; }
+    .bank-head p { margin: 0; color: var(--ink-soft); }
+    .filters { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.2rem; }
+    .filters button { font: 700 .85rem var(--body); padding: .3rem .7rem; border-radius: 99px; border: 1.5px solid var(--ink); background: var(--card); cursor: pointer; }
+    .filters button.on { background: var(--ink); color: var(--board); }
+    .item { background: var(--card); border: 2px solid var(--ink); border-radius: 14px; box-shadow: 0 5px 0 var(--ink); padding: 1rem 1.3rem 1.2rem; margin-bottom: 1.4rem; }
+    .item-head { display: flex; gap: .6rem; align-items: center; margin-bottom: .6rem; color: var(--ink-soft); font-size: .85rem; }
+    .item-head b { font-family: var(--display); color: var(--ink); font-size: 1rem; }
+    .item .chip { border-color: var(--rule); }
+    .item .prompt { font-size: 1.25rem; margin-bottom: .8rem; }
+    .item .choices li { font-size: 1.1rem; min-height: 2.8rem; box-shadow: 0 3px 0 var(--ink); }
+    .item .choices li.right { box-shadow: 0 3px 0 var(--green); }
+    .item .explain { font-size: 1.05rem; margin-top: .8rem; }
+  </style>
+</head>
+<body>
+  <header class="top"><div class="brand">The Gauntlet</div><div class="qinfo"><span class="qn">Question bank</span></div>
+    <div class="joininfo"><a href="host.html" style="color:inherit">Host a game →</a></div></header>
+  <main class="bank">
+    <div class="bank-head"><p id="summary"></p></div>
+    <div class="filters" id="filters"></div>
+    <div id="list"></div>
+  </main>
+  <script src="questions.js"></script>
+  <script type="module">
+    import { promptHTML, choicesHTML } from "./view.js";
+    import { esc } from "./game.js";
+    const Q = window.GAUNTLET_QUESTIONS;
+    const topics = [...new Set(Q.map((q) => q.topic))];
+    let pick = "All";
+    const draw = () => {
+      const shown = Q.filter((q) => pick === "All" || q.topic === pick);
+      document.querySelector("#summary").textContent =
+        `${Q.length} questions across ${topics.length} topics. The game draws them at random and doesn't repeat one until all have been used. For teacher review: answers are shown.`;
+      document.querySelector("#filters").innerHTML = ["All", ...topics].map((t) =>
+        `<button class="${t === pick ? "on" : ""}" data-t="${esc(t)}">${esc(t)} (${t === "All" ? Q.length : Q.filter((q) => q.topic === t).length})</button>`).join("");
+      document.querySelectorAll("#filters button").forEach((b) => (b.onclick = () => { pick = b.dataset.t; draw(); }));
+      document.querySelector("#list").innerHTML = shown.map((q) => `
+        <article class="item">
+          <div class="item-head"><b>${q.id.replace("q", "#")}</b><span class="chip">${esc(q.topic)}</span><span>${q.time}s on the clock</span></div>
+          <div class="prompt">${promptHTML(q)}</div>
+          ${choicesHTML(q, true)}
+        </article>`).join("");
+    };
+    draw();
+  </script>
+</body>
+</html>

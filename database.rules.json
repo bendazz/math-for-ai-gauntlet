@@ -1,0 +1,37 @@
+{
+  "rules": {
+    "games": {
+      "$code": {
+        ".read": "auth != null",
+        "host": {
+          ".write": "auth != null && !data.exists() && newData.val() === auth.uid"
+        },
+        "created": {
+          ".write": "auth != null && newData.parent().child('host').val() === auth.uid"
+        },
+        "settings": {
+          ".write": "auth != null && newData.parent().child('host').val() === auth.uid"
+        },
+        "state": {
+          ".write": "auth != null && newData.parent().child('host').val() === auth.uid"
+        },
+        "teams": {
+          "$tid": {
+            ".write": "auth != null && (newData.parent().parent().child('host').val() === auth.uid || (!data.exists() && root.child('games/' + $code + '/state/phase').exists() && newData.child('uid').val() === auth.uid && newData.child('pos').val() === 0 && newData.child('status').val() === 'in' && newData.child('ddUsed').val() === false && newData.child('redemptionUsed').val() === false))",
+            "name": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 18"
+            }
+          }
+        },
+        "answers": {
+          "$qid": {
+            "$tid": {
+              ".write": "auth != null && (root.child('games/' + $code + '/host').val() === auth.uid || (root.child('games/' + $code + '/teams/' + $tid + '/uid').val() === auth.uid && root.child('games/' + $code + '/state/phase').val() === 'question' && root.child('games/' + $code + '/state/qid').val() === $qid && now <= root.child('games/' + $code + '/state/deadline').val() + 1000))",
+              ".validate": "newData.hasChildren(['c']) && newData.child('c').isNumber() && newData.child('c').val() >= 0 && newData.child('c').val() <= 3"
+            }
+          }
+        }
+      }
+    }
+  }
+}
