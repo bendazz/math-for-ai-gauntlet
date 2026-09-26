@@ -68,3 +68,41 @@ writing `questions.js`. Never edit `questions.js` by hand.
 
 Note: `questions.js` is public, so a determined student could read the answers in the page source. The phones
 never load it, which keeps it out of casual reach during the game.
+
+## Testing
+
+    ~/.langflow/.langflow-venv/bin/python tools/play_test.py local       # rehearsal mode, no Firebase
+    ~/.langflow/.langflow-venv/bin/python tools/play_test.py firebase    # the real database, plus the security rules
+
+Plays a scripted 8-round game in headless Chrome (a projector and three phones), checks the scoring edge cases,
+and in firebase mode tries six cheats from a phone that the rules must refuse. It exits non-zero on any failure
+and saves screenshots of every screen to `tools/shots/`. Look at them after visual changes. Add
+`--base https://…` to test a deployed copy. Run both modes after any change to the game code.
+
+## Making a version for another course
+
+Copy this whole folder to a new repo (e.g. `ai-apps-gauntlet`) and change only the course-specific parts.
+
+**Change:**
+- `tools/build_questions.py`: the questions (the heart of it). Keep the format: 4 choices, correct one first, a
+  one- or two-sentence `explain`, every answer checked with an `assert`, numbers doable by hand in the time limit.
+  Redefine the topic constants and the `TIME` table (seconds per topic) for the new course. The build expects
+  exactly 40 questions (`assert len(Q) == 40`); change that number if you want more or fewer. The chunking
+  helpers (`merge`, `check_chunks`) can go if the course has no chunking questions.
+- Title and wording: "The Gauntlet" appears in `host.html`, `index.html`, `bank.html` (the `<title>`s and
+  the header), the start screen in `host.js`, and the lobby rules text in `host.js`. Rename freely.
+- `host.css` / `play.css`: optional. Give the new course's game its own look if you like.
+
+**Leave alone** (the tested machinery):
+- `game.js`: scoring rules. If you change them, update the scoring checks in `tools/play_test.py`.
+- `net.js`: the Firebase and local-rehearsal connection.
+- `database.rules.json`: the security rules.
+- The `window.__gauntlet` hooks in `host.js` and `play.js`, which the test uses.
+
+**Firebase:** reuse the same project. Keep `firebase-config.js` as it is; there's nothing to set up again.
+Every game gets its own random code under `games/`, so two courses' games never collide.
+(The one catch: two games live at the same moment could, very rarely, draw the same 4-letter code; the host
+checks for a clash before creating one.)
+
+**Deploy:** new public GitHub repo, then Settings → Pages → deploy from `main` / root. Then run
+`tools/play_test.py firebase --base https://<user>.github.io/<repo>` against the live copy.
