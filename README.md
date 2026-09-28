@@ -87,7 +87,7 @@ Copy this whole folder to a new repo (e.g. `ai-apps-gauntlet`) and change only t
 - `tools/build_questions.py`: the questions (the heart of it). Keep the format: 4 choices, correct one first, a
   one- or two-sentence `explain`, every answer checked with an `assert`, numbers doable by hand in the time limit.
   Redefine the topic constants and the `TIME` table (seconds per topic) for the new course. The build expects
-  exactly 40 questions (`assert len(Q) == 40`); change that number if you want more or fewer. The chunking
+  exactly 31 questions (`assert len(Q) == 31`); change that number if you want more or fewer. The chunking
   helpers (`merge`, `check_chunks`) can go if the course has no chunking questions.
 - Title and wording: "The Gauntlet" appears in `host.html`, `index.html`, `bank.html` (the `<title>`s and
   the header), the start screen in `host.js`, and the lobby rules text in `host.js`. Rename freely.
