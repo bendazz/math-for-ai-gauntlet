@@ -21,11 +21,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>Find the length ‖(−7, 24)‖.</p>",
   "choices": [
    "17",
-   "25",
    "31",
-   "625"
+   "625",
+   "25"
   ],
-  "answer": 1,
+  "answer": 3,
   "explain": "√(49 + 576) = √625 = 25. Squaring wipes out the minus sign."
  },
  {
@@ -36,10 +36,10 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "11",
    "49",
-   "√13",
-   "7"
+   "7",
+   "√13"
   ],
-  "answer": 3,
+  "answer": 2,
   "explain": "√(4 + 9 + 36) = √49 = 7. All three components get squared."
  },
  {
@@ -49,11 +49,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>Mean-pool the word vectors (1, 5), (3, −1) and (5, 2) into one sentence vector.</p>",
   "choices": [
    "(9, 6)",
-   "(3, 2)",
    "(4.5, 3)",
-   "(3, <span class=\"fr\"><span>8</span><span>3</span></span>)"
+   "(3, <span class=\"fr\"><span>8</span><span>3</span></span>)",
+   "(3, 2)"
   ],
-  "answer": 1,
+  "answer": 3,
   "explain": "Add them: (9, 6). Divide by the 3 words: (3, 2)."
  },
  {
@@ -64,10 +64,10 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "(0.8, 0.6)",
    "(−4, 3)",
-   "(−<span class=\"fr\"><span>4</span><span>7</span></span>, <span class=\"fr\"><span>3</span><span>7</span></span>)",
-   "(−0.8, 0.6)"
+   "(−0.8, 0.6)",
+   "(−<span class=\"fr\"><span>4</span><span>7</span></span>, <span class=\"fr\"><span>3</span><span>7</span></span>)"
   ],
-  "answer": 3,
+  "answer": 2,
   "explain": "The length is √(64 + 36) = 10. Divide each component by 10: (−0.8, 0.6)."
  },
  {
@@ -76,12 +76,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 75,
   "prompt": "<p>Compute the dot product (3, −2) · (4, 5).</p>",
   "choices": [
-   "2",
    "22",
+   "2",
    "(12, −10)",
    "9"
   ],
-  "answer": 0,
+  "answer": 1,
   "explain": "(3)(4) + (−2)(5) = 12 − 10 = 2. A dot product is one number."
  },
  {
@@ -90,12 +90,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 75,
   "prompt": "<p>Find the cosine similarity of (0, 5) and (3, 4).</p>",
   "choices": [
-   "20",
    "0.8",
+   "20",
    "2",
    "1"
   ],
-  "answer": 1,
+  "answer": 0,
   "explain": "Dot product 0 + 20 = 20. Both lengths are 5, so 20 ÷ (5 × 5) = 0.8."
  },
  {
@@ -104,12 +104,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 75,
   "prompt": "<p>For what value of <em>k</em> is (<em>k</em>, −2) perpendicular to (5, 10)?</p>",
   "choices": [
+   "4",
    "−4",
    "20",
-   "4",
    "<span class=\"fr\"><span>1</span><span>4</span></span>"
   ],
-  "answer": 2,
+  "answer": 0,
   "explain": "Perpendicular means dot product 0: 5k − 20 = 0, so k = 4."
  },
  {
@@ -119,11 +119,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>Compute the 3-D dot product (1, −2, 4) · (3, 1, −1).</p>",
   "choices": [
    "5",
+   "−3",
    "9",
-   "(3, −2, −4)",
-   "−3"
+   "(3, −2, −4)"
   ],
-  "answer": 3,
+  "answer": 1,
   "explain": "(1)(3) + (−2)(1) + (4)(−1) = 3 − 2 − 4 = −3."
  },
  {
@@ -132,12 +132,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 75,
   "prompt": "<p>Using only the <em>sign</em> of the dot product, which vector points broadly <strong>opposite</strong> to (2, 1)?</p>",
   "choices": [
-   "(−3, −1)",
    "(1, −1)",
    "(−1, 2)",
-   "(1, 3)"
+   "(1, 3)",
+   "(−3, −1)"
   ],
-  "answer": 0,
+  "answer": 3,
   "explain": "(2, 1) · (−3, −1) = −6 − 1 = −7. Negative means broadly opposite. The others give 1, 0 and 5."
  },
  {
@@ -146,12 +146,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 120,
   "prompt": "<p>Give the chunk lengths.</p>",
   "choices": [
-   "34 and 25",
    "34 and 26",
+   "34 and 25",
    "51 and 9",
    "17, 16, 16 and 9"
   ],
-  "answer": 1,
+  "answer": 0,
   "explain": "17 + 16 + 1 = 34. Adding line 3 would make 51, over 40, so emit 34. Then 16 + 9 + 1 = 26.",
   "doc": {
    "text": "Charge the drone.\nCheck the props.\nFind open space.\nStay low.",
@@ -188,10 +188,10 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "2",
    "4",
-   "3",
-   "1"
+   "1",
+   "3"
   ],
-  "answer": 2,
+  "answer": 3,
   "explain": "The separator is 2 characters. 15 + 15 + 2 = 32. Then 23 + 16 + 2 = 41, over 40, so the last two stay apart: 32, 23, 16.",
   "doc": {
    "text": "Rain is likely.\n\nBring a jacket.\n\nThe game starts at six.\n\nParking is free.",
@@ -208,10 +208,10 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "“Stir.”, “Taste.” and “Add salt.” (22)",
    "“Stir.” by itself (5)",
-   "“Stir.” through “Stir again.” (34)",
-   "“Stir.” and “Taste.” (12)"
+   "“Stir.” and “Taste.” (12)",
+   "“Stir.” through “Stir again.” (34)"
   ],
-  "answer": 3,
+  "answer": 2,
   "explain": "5 + 6 + 1 = 12. Adding “Add salt.” makes 12 + 9 + 1 = 22, over 20. So chunk 1 is the first two lines.",
   "doc": {
    "text": "Stir.\nTaste.\nAdd salt.\nStir again.\nServe it hot.\nWash the pot.",
@@ -227,11 +227,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>How long is chunk 1?</p>",
   "choices": [
    "21",
+   "32",
    "31",
-   "40",
-   "32"
+   "40"
   ],
-  "answer": 3,
+  "answer": 1,
   "explain": "9 + 11 + 1 = 21, then 21 + 10 + 1 = 32. That's equal to the size, not over it, so it fits.",
   "doc": {
    "text": "Aim high.\nTrain hard.\nRest well.\nRepeat.",
@@ -246,12 +246,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 120,
   "prompt": "<p>What comes out of the splitter?</p>",
   "choices": [
-   "4 chunks: the long line is cut into 25 + 25 + 7",
    "3 chunks, and the middle one is 57 characters",
+   "4 chunks: the long line is cut into 25 + 25 + 7",
    "2 chunks: the long line is thrown away",
    "1 chunk: everything glued together"
   ],
-  "answer": 1,
+  "answer": 0,
   "explain": "Atoms are never cut and never thrown away. A too-long atom comes out whole, over the size.",
   "doc": {
    "text": "Hi.\nThis single line is far too long to fit inside one chunk.\nBye.",
@@ -266,12 +266,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 120,
   "prompt": "<p>Give the chunk lengths.</p>",
   "choices": [
-   "27, 29, 32",
    "27, 32",
    "27, 29, 17",
-   "42, 32"
+   "42, 32",
+   "27, 29, 32"
   ],
-  "answer": 0,
+  "answer": 3,
   "explain": "Both times, popping stops at exactly 14 (not over 14), so one line carries. And the last chunk, 14 + 17 + 1 = 32, exactly fits.",
   "doc": {
    "text": "Grab a cart.\nFind the milk.\nGet some eggs.\nPay at the front.",
@@ -286,12 +286,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 120,
   "prompt": "<p>How long is chunk 2?</p>",
   "choices": [
-   "77",
    "86",
    "64",
-   "85"
+   "85",
+   "77"
   ],
-  "answer": 0,
+  "answer": 3,
   "explain": "Chunk 1 = 21, already under 25. But the long line must fit: 21 + 64 + 1 = 86, over 80. Pop “Sign in.” → 12 + 64 + 1 = 77.",
   "doc": {
    "text": "Sign in.\nPick a seat.\nThe lecture covers vectors, dot products, and cosine similarity.",
@@ -307,11 +307,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>A question has <strong>12 relevant</strong> sentences. You set <strong>k = 8</strong> and get <strong>6</strong> hits. Precision and recall?</p>",
   "choices": [
    "Precision 50%, recall 75%",
-   "Precision 75%, recall 75%",
    "Precision 75%, recall 50%",
+   "Precision 75%, recall 75%",
    "Precision 50%, recall 50%"
   ],
-  "answer": 2,
+  "answer": 1,
   "explain": "Precision = hits ÷ k = 6 ÷ 8 = 75%. Recall = hits ÷ relevant = 6 ÷ 12 = 50%."
  },
  {
@@ -320,12 +320,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 60,
   "prompt": "<p>A question has <strong>10 relevant</strong> sentences in a collection of 100. With <strong>k = 4</strong>, what is the <strong>best possible recall</strong>?</p>",
   "choices": [
-   "40%",
    "100%",
+   "40%",
    "4%",
    "25%"
   ],
-  "answer": 0,
+  "answer": 1,
   "explain": "At most 4 hits come back, out of 10 relevant: 4 ÷ 10 = 40%."
  },
  {
@@ -334,12 +334,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 60,
   "prompt": "<p>You raise k from 5 to 10. What can happen to <strong>recall</strong>?</p>",
   "choices": [
-   "It goes up or stays the same",
    "It goes down",
    "It always doubles",
+   "It goes up or stays the same",
    "It could go either way"
   ],
-  "answer": 0,
+  "answer": 2,
   "explain": "More results can only add hits, and the number of relevant sentences doesn't change. Recall can't fall."
  },
  {
@@ -348,12 +348,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 60,
   "prompt": "<p>A collection of 50 sentences has <strong>5 relevant</strong> ones. With <strong>k = 10</strong>, the search finds all 5. Precision and recall?</p>",
   "choices": [
-   "Precision 100%, recall 50%",
    "Precision 50%, recall 100%",
+   "Precision 100%, recall 50%",
    "Precision 100%, recall 100%",
    "Precision 10%, recall 100%"
   ],
-  "answer": 1,
+  "answer": 0,
   "explain": "Precision = 5 ÷ 10 = 50% (half the results are junk, unavoidably). Recall = 5 ÷ 5 = 100%."
  },
  {
@@ -363,11 +363,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>A smart doorbell watches for delivered packages. A package arrives, but the doorbell reports “no package.” Which outcome is this?</p>",
   "choices": [
    "False positive",
-   "False negative",
    "True positive",
+   "False negative",
    "True negative"
   ],
-  "answer": 1,
+  "answer": 2,
   "explain": "The doorbell hunts for packages, so “package” is the positive. It said no, and it was wrong: a miss, a false negative."
  },
  {
@@ -406,10 +406,10 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "0.2%",
    "100%",
-   "99.8%",
-   "98%"
+   "98%",
+   "99.8%"
   ],
-  "answer": 2,
+  "answer": 3,
   "explain": "It's right on 998 of 1,000 days: 99.8%. And it caught zero earthquakes. That's the accuracy trap."
  },
  {
@@ -420,10 +420,10 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "12",
    "9",
-   "15",
-   "91"
+   "91",
+   "15"
   ],
-  "answer": 2,
+  "answer": 3,
   "explain": "Alerts are the “said person” column: 9 + 6 = 15. The row, 9 + 3, counts the real people."
  },
  {
@@ -446,12 +446,12 @@ window.GAUNTLET_QUESTIONS = [
   "time": 75,
   "prompt": "<p>A model flags <strong>25</strong> items with precision <strong>80%</strong> and recall <strong>50%</strong>. How many items were <strong>really positive</strong>?</p>",
   "choices": [
+   "40",
    "20",
    "25",
-   "40",
    "45"
   ],
-  "answer": 2,
+  "answer": 0,
   "explain": "80% of 25 flags are right: TP = 20. Those 20 are 50% of the real positives, so there are 40."
  },
  {
@@ -461,11 +461,11 @@ window.GAUNTLET_QUESTIONS = [
   "prompt": "<p>An AI flags students for an <strong>academic-integrity hearing</strong>. Which should the school care about most?</p>",
   "choices": [
    "Recall: catch every single cheater",
+   "Precision: a false accusation does real harm",
    "Accuracy: it covers both mistakes",
-   "Neither: they always rise together",
-   "Precision: a false accusation does real harm"
+   "Neither: they always rise together"
   ],
-  "answer": 3,
+  "answer": 1,
   "explain": "The harsh mistake here is the false alarm, an innocent student accused. That's precision."
  },
  {
@@ -476,10 +476,136 @@ window.GAUNTLET_QUESTIONS = [
   "choices": [
    "0%",
    "50%",
-   "It depends on the threshold",
-   "100%"
+   "100%",
+   "It depends on the threshold"
+  ],
+  "answer": 2,
+  "explain": "Every real positive gets a yes, so none are missed: recall = 100%. Its precision is terrible, though."
+ },
+ {
+  "id": "q32",
+  "topic": "Threshold",
+  "time": 90,
+  "prompt": "<p>An AI flags X-rays with a <strong>broken bone</strong> when the score is <strong>at or above 0.50</strong>. Which matrix is right?</p><table class=\"qt\"><tr><th>X-ray</th><th>Score</th><th>Really…</th></tr><tr><td>1</td><td>0.71</td><td>broken</td></tr><tr><td>2</td><td>0.38</td><td>fine</td></tr><tr><td>3</td><td>0.50</td><td>broken</td></tr><tr><td>4</td><td>0.84</td><td>fine</td></tr><tr><td>5</td><td>0.22</td><td>broken</td></tr><tr><td>6</td><td>0.95</td><td>broken</td></tr><tr><td>7</td><td>0.46</td><td>fine</td></tr><tr><td>8</td><td>0.09</td><td>fine</td></tr></table>",
+  "choices": [
+   "TP 3, FP 1, FN 1, TN 3",
+   "TP 2, FP 1, FN 2, TN 3",
+   "TP 3, FP 2, FN 1, TN 2",
+   "TP 4, FP 0, FN 0, TN 4"
+  ],
+  "answer": 0,
+  "explain": "Flagged: 1, 3, 4, 6. Broken among them: 1, 3 (exactly 0.50 counts), 6 → TP 3. X-ray 4 is fine → FP 1. X-ray 5 (0.22) is missed → FN 1."
+ },
+ {
+  "id": "q33",
+  "topic": "Threshold",
+  "time": 90,
+  "prompt": "<p>You <strong>raise</strong> the threshold. Which count can only go up or stay the same?</p>",
+  "choices": [
+   "FN (misses)",
+   "TP",
+   "FP",
+   "The number of items flagged"
+  ],
+  "answer": 0,
+  "explain": "A higher bar flags fewer items. Anything that loses its flag becomes a no — so misses can only pile up."
+ },
+ {
+  "id": "q34",
+  "topic": "Threshold",
+  "time": 90,
+  "prompt": "<p>The rule: catch <strong>at least 80%</strong> of the 20 real cases, then as few false alarms as possible. Which threshold?</p><table class=\"qt\"><tr><th>Threshold</th><th>TP</th><th>FP</th><th>FN</th></tr><tr><td>0.8</td><td>12</td><td>2</td><td>8</td></tr><tr><td>0.6</td><td>16</td><td>5</td><td>4</td></tr><tr><td>0.4</td><td>18</td><td>10</td><td>2</td></tr><tr><td>0.2</td><td>20</td><td>30</td><td>0</td></tr></table>",
+  "choices": [
+   "0.8",
+   "0.6",
+   "0.4",
+   "0.2"
+  ],
+  "answer": 1,
+  "explain": "Recall: 0.8 → 60%, 0.6 → 80%, 0.4 → 90%, 0.2 → 100%. 0.6 is the first to reach 80%, with the fewest false alarms (5)."
+ },
+ {
+  "id": "q35",
+  "topic": "Threshold",
+  "time": 90,
+  "prompt": "<p>Which threshold will produce the <strong>most false alarms</strong>?</p>",
+  "choices": [
+   "0.4",
+   "0.6",
+   "0.2",
+   "0.8"
+  ],
+  "answer": 2,
+  "explain": "The lowest bar flags the most items, including the most that aren't really positive."
+ },
+ {
+  "id": "q36",
+  "topic": "Threshold",
+  "time": 90,
+  "prompt": "<p>A pipeline sensor AI flags a <strong>leak</strong> at or above <strong>0.70</strong>. What is its precision?</p><table class=\"qt\"><tr><th>Reading</th><th>Score</th><th>Really…</th></tr><tr><td>1</td><td>0.92</td><td>leak</td></tr><tr><td>2</td><td>0.35</td><td>no leak</td></tr><tr><td>3</td><td>0.78</td><td>no leak</td></tr><tr><td>4</td><td>0.64</td><td>leak</td></tr><tr><td>5</td><td>0.71</td><td>leak</td></tr><tr><td>6</td><td>0.15</td><td>no leak</td></tr><tr><td>7</td><td>0.88</td><td>leak</td></tr><tr><td>8</td><td>0.55</td><td>leak</td></tr></table>",
+  "choices": [
+   "60%",
+   "100%",
+   "75%",
+   "80%"
+  ],
+  "answer": 2,
+  "explain": "Flagged: 1, 3, 5, 7. Real leaks among them: 1, 5, 7. Precision = 3 ÷ 4 = 75%."
+ },
+ {
+  "id": "q37",
+  "topic": "F1 score",
+  "time": 75,
+  "prompt": "<p>Precision is <strong>1.0</strong> and recall is <strong>0.6</strong>. What is F1?</p>",
+  "choices": [
+   "0.80",
+   "0.75",
+   "0.60",
+   "1.6"
+  ],
+  "answer": 1,
+  "explain": "2 × 1.0 × 0.6 ÷ (1.0 + 0.6) = 1.2 ÷ 1.6 = 0.75. A bit below the plain average of 0.8."
+ },
+ {
+  "id": "q38",
+  "topic": "F1 score",
+  "time": 75,
+  "prompt": "<p>A model has <strong>TP 9, FP 1, FN 5</strong>. What is its F1?</p>",
+  "choices": [
+   "0.60",
+   "0.75",
+   "0.90",
+   "About 0.64"
+  ],
+  "answer": 1,
+  "explain": "Shortcut: 2TP ÷ (2TP + FP + FN) = 18 ÷ (18 + 1 + 5) = 18 ÷ 24 = 0.75."
+ },
+ {
+  "id": "q39",
+  "topic": "F1 score",
+  "time": 75,
+  "prompt": "<p>When is F1 exactly <strong>0</strong>?</p>",
+  "choices": [
+   "When FP = 0",
+   "When FN = 0",
+   "When TN = 0",
+   "When TP = 0"
   ],
   "answer": 3,
-  "explain": "Every real positive gets a yes, so none are missed: recall = 100%. Its precision is terrible, though."
+  "explain": "F1 = 2TP ÷ (2TP + FP + FN). The top is 2TP, so F1 is 0 exactly when there are no true positives."
+ },
+ {
+  "id": "q40",
+  "topic": "F1 score",
+  "time": 75,
+  "prompt": "<p>Model A: precision 0.6, recall 0.6. Model B: precision 0.9, recall 0.4. Which has the higher F1?</p>",
+  "choices": [
+   "Model B",
+   "They tie",
+   "You can't tell without TN",
+   "Model A"
+  ],
+  "answer": 3,
+  "explain": "A: F1 = 0.6. B: 2 × 0.9 × 0.4 ÷ 1.3 = 0.72 ÷ 1.3 ≈ 0.55. F1 rewards balance."
  }
 ];

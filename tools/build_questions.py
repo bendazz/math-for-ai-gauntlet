@@ -30,9 +30,11 @@ EDGE = "Chunking edge cases"
 PR = "Precision & recall in search"
 CM = "Confusion matrix"
 CPR = "Precision & recall"
+THR = "Threshold"
+F1S = "F1 score"
 
 # seconds on the clock for each topic (the host can stretch all of them)
-TIME = {VEC: 60, DOT: 75, CHK: 120, EDGE: 120, PR: 60, CM: 60, CPR: 75}
+TIME = {VEC: 60, DOT: 75, CHK: 120, EDGE: 120, PR: 60, CM: 60, CPR: 75, THR: 90, F1S: 75}
 
 
 def fr(a, b):
@@ -55,6 +57,17 @@ def pct(a, b):
     return round(100 * a / b)
 
 
+def f1(tp, fp, fn):
+    return F(2 * tp, 2 * tp + fp + fn)
+
+
+def counts(items, t):
+    tp = sum(1 for s, y in items if s >= t and y)
+    fp = sum(1 for s, y in items if s >= t and not y)
+    fn = sum(1 for s, y in items if s < t and y)
+    return tp, fp, fn, len(items) - tp - fp - fn
+
+
 def grid(say_yes, say_no, is_yes, is_no, tp, fn, fp, tn):
     return (f'<table class="qt cm"><tr><td></td><th>{say_yes}</th><th>{say_no}</th></tr>'
             f'<tr><th>{is_yes}</th><td><b>{tp}</b><small>TP</small></td><td><b>{fn}</b><small>FN</small></td></tr>'
@@ -65,6 +78,10 @@ def table(head, rows):
     h = "".join(f"<th>{x}</th>" for x in head)
     b = "".join("<tr>" + "".join(f"<td>{x}</td>" for x in r) + "</tr>" for r in rows)
     return f'<table class="qt"><tr>{h}</tr>{b}</table>'
+
+
+def score_rows(items, yes, no):
+    return [[i + 1, f"{float(s):.2f}", yes if y else no] for i, (s, y) in enumerate(items)]
 
 
 # ------------------------------------------------------------------ chunking check
@@ -298,10 +315,64 @@ q(CPR, "<p>A model says <strong>yes to everything</strong>. What is its recall?<
   ["100%", "0%", "50%", "It depends on the threshold"],
   "Every real positive gets a yes, so none are missed: recall = 100%. Its precision is terrible, though.")
 
+# ================================================================== THRESHOLD
+BONES = [(F(71, 100), True), (F(38, 100), False), (F(50, 100), True), (F(84, 100), False),
+         (F(22, 100), True), (F(95, 100), True), (F(46, 100), False), (F(9, 100), False)]
+assert counts(BONES, F(50, 100)) == (3, 1, 1, 3)
+q(THR, "<p>An AI flags X-rays with a <strong>broken bone</strong> when the score is <strong>at or above 0.50</strong>. "
+       "Which matrix is right?</p>" + table(["X-ray", "Score", "Really…"], score_rows(BONES, "broken", "fine")),
+  ["TP 3, FP 1, FN 1, TN 3", "TP 2, FP 1, FN 2, TN 3", "TP 3, FP 2, FN 1, TN 2", "TP 4, FP 0, FN 0, TN 4"],
+  "Flagged: 1, 3, 4, 6. Broken among them: 1, 3 (exactly 0.50 counts), 6 → TP 3. X-ray 4 is fine → FP 1. X-ray 5 (0.22) is missed → FN 1.")
+
+q(THR, "<p>You <strong>raise</strong> the threshold. Which count can only go up or stay the same?</p>",
+  ["FN (misses)", "TP", "FP", "The number of items flagged"],
+  "A higher bar flags fewer items. Anything that loses its flag becomes a no — so misses can only pile up.")
+
+ALERTS = [("0.8", 12, 2, 8), ("0.6", 16, 5, 4), ("0.4", 18, 10, 2), ("0.2", 20, 30, 0)]
+assert [pct(tp, 20) for _, tp, _, _ in ALERTS] == [60, 80, 90, 100]
+q(THR, "<p>The rule: catch <strong>at least 80%</strong> of the 20 real cases, then as few false alarms as possible. "
+       "Which threshold?</p>" + table(["Threshold", "TP", "FP", "FN"], [list(r) for r in ALERTS]),
+  ["0.6", "0.8", "0.4", "0.2"],
+  "Recall: 0.8 → 60%, 0.6 → 80%, 0.4 → 90%, 0.2 → 100%. 0.6 is the first to reach 80%, with the fewest false alarms (5).")
+
+q(THR, "<p>Which threshold will produce the <strong>most false alarms</strong>?</p>",
+  ["0.2", "0.4", "0.6", "0.8"],
+  "The lowest bar flags the most items, including the most that aren't really positive.")
+
+LEAK = [(F(92, 100), True), (F(35, 100), False), (F(78, 100), False), (F(64, 100), True),
+        (F(71, 100), True), (F(15, 100), False), (F(88, 100), True), (F(55, 100), True)]
+tp, fp, fn, tn = counts(LEAK, F(70, 100))
+assert (tp, fp) == (3, 1) and pct(tp, tp + fp) == 75
+q(THR, "<p>A pipeline sensor AI flags a <strong>leak</strong> at or above <strong>0.70</strong>. What is its precision?</p>"
+       + table(["Reading", "Score", "Really…"], score_rows(LEAK, "leak", "no leak")),
+  ["75%", "60%", "100%", "80%"],
+  "Flagged: 1, 3, 5, 7. Real leaks among them: 1, 5, 7. Precision = 3 ÷ 4 = 75%.")
+
+# ================================================================== F1
+assert F(2) * 1 * F(6, 10) / (1 + F(6, 10)) == F(3, 4)
+q(F1S, "<p>Precision is <strong>1.0</strong> and recall is <strong>0.6</strong>. What is F1?</p>",
+  ["0.75", "0.80", "0.60", "1.6"],
+  "2 × 1.0 × 0.6 ÷ (1.0 + 0.6) = 1.2 ÷ 1.6 = 0.75. A bit below the plain average of 0.8.")
+
+assert f1(9, 1, 5) == F(3, 4)
+q(F1S, "<p>A model has <strong>TP 9, FP 1, FN 5</strong>. What is its F1?</p>",
+  ["0.75", "0.60", "0.90", "About 0.64"],
+  "Shortcut: 2TP ÷ (2TP + FP + FN) = 18 ÷ (18 + 1 + 5) = 18 ÷ 24 = 0.75.")
+
+q(F1S, "<p>When is F1 exactly <strong>0</strong>?</p>",
+  ["When TP = 0", "When FP = 0", "When FN = 0", "When TN = 0"],
+  "F1 = 2TP ÷ (2TP + FP + FN). The top is 2TP, so F1 is 0 exactly when there are no true positives.")
+
+fb = F(2) * F(9, 10) * F(4, 10) / (F(9, 10) + F(4, 10))
+assert fb == F(72, 130) and F(6, 10) > fb
+q(F1S, "<p>Model A: precision 0.6, recall 0.6. Model B: precision 0.9, recall 0.4. Which has the higher F1?</p>",
+  ["Model A", "Model B", "They tie", "You can't tell without TN"],
+  "A: F1 = 0.6. B: 2 × 0.9 × 0.4 ÷ 1.3 = 0.72 ÷ 1.3 ≈ 0.55. F1 rewards balance.")
+
 
 # ------------------------------------------------------------------ assemble + check
 LETTERS = "ABCD"
-assert len(Q) == 31, len(Q)
+assert len(Q) == 40, len(Q)
 rng = random.Random(1709)
 slots = [i % 4 for i in range(len(Q))]
 rng.shuffle(slots)
